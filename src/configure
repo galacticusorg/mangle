@@ -1,5 +1,5 @@
 #! /bin/sh
-# © M E C Swanson 2008
+# Â© M E C Swanson 2008
 #
 #Script to generate the mangle Makefile
 #supports Linux, Darwin (MacOSX Intel or PPC), and SunOS 
@@ -33,7 +33,7 @@ else
     BYTES=$3
 fi
 
-if [ "$ARCH" = "x86_64" ] || [ "$ARCH" = "ia64" ] || [ "$ARCH" = "amd64" ] ; then
+if [ "$ARCH" = "x86_64" ] || [ "$ARCH" = "ia64" ] || [ "$ARCH" = "amd64" ] || [ "$ARCH" = "arm64" ] ; then
     MFLAG="-m64"
 elif [ "$OS" = "Darwin" ] ; then
     mac_64bit_compatible=`ioreg -l -p IODeviceTree | grep firmware-abi | awk '/64/{print "y"}'`
