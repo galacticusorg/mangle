@@ -99,7 +99,7 @@ CC = gcc
 CFLAGS = -g -O3 -Wall -DLINUX -DGCC $MFLAG -D_FILE_OFFSET_BITS=64 -fopenmp
 
 F77 = gfortran
-FFLAGS:= -Wall -g -O3 -DGFORTRAN -ff2c $MFLAG -D_FILE_OFFSET_BITS=64 -fopenmp
+FFLAGS:= -Wall -g -O3 -DGFORTRAN -ff2c $MFLAG -D_FILE_OFFSET_BITS=64 -fopenmp -ffixed-line-length-none
 STATICFLAGS:= -static
 
 #MAKE=gmake
@@ -150,7 +150,7 @@ CC = gcc
 CFLAGS = -g -O3 -Wall -DMACOSX -DGCC -D_FILE_OFFSET_BITS=64 -fopenmp
 
 F77 = gfortran
-FFLAGS:= -Wall -g -O3 -DGFORTRAN -ff2c -D_FILE_OFFSET_BITS=64 -fopenmp
+FFLAGS:= -Wall -g -O3 -DGFORTRAN -ff2c -D_FILE_OFFSET_BITS=64 -fopenmp -ffixed-line-length-none
 #STATICFLAGS:= -static-libgfortran
 STATICFLAGS:= -nodefaultlibs -lSystem -lgcc -lm -lgfortran_static
 # static linking of gfortran library to compile for distribution.
@@ -184,7 +184,7 @@ CFLAGS = -g -O3 -DGCC -D_FILE_OFFSET_BITS=64
 
 # gnu gfortran
 F77 = gfortran
-FFLAGS = -W -g -O3 -DGFORTRAN -ff2c -D_FILE_OFFSET_BITS=64
+FFLAGS = -W -g -O3 -DGFORTRAN -ff2c -D_FILE_OFFSET_BITS=64 -ffixed-line-length-none
 
 #MAKE=make
 
@@ -215,7 +215,7 @@ CFLAGS = -g -O3 -Wall -DLINUX -DGCC $MFLAG -D_FILE_OFFSET_BITS=64 -fopenmp
 
 # gnu g77 (which assumes no SAVE)
 F77 = g77
-FFLAGS = -Wimplicit -fbounds-check -g -O3 -DG77 $MFLAG -D_FILE_OFFSET_BITS=64 -fopenmp
+FFLAGS = -Wimplicit -fbounds-check -g -O3 -DG77 $MFLAG -D_FILE_OFFSET_BITS=64 -fopenmp -ffixed-line-length-none
 
 #MAKE=gmake
 
@@ -234,7 +234,7 @@ CFLAGS = -g -O3 -Wall -DMACOSX -DGCC $MFLAG -D_FILE_OFFSET_BITS=64
 
 # gnu g77 (which assumes no SAVE)
 F77 = g77
-FFLAGS = -Wimplicit -fbounds-check -g -O3 -DG77 $MFLAG -D_FILE_OFFSET_BITS=64
+FFLAGS = -Wimplicit -fbounds-check -g -O3 -DG77 $MFLAG -D_FILE_OFFSET_BITS=64 -ffixed-line-length-none
 
 #MAKE=gmake
 
@@ -276,7 +276,7 @@ CFLAGS = -O -DSUN $MFLAG -D_FILE_OFFSET_BITS=64
 
 F77 = f77
 #FFLAGS = -u -O -pg -DSUN
-FFLAGS = -u -O -DSUN $MFLAG -D_FILE_OFFSET_BITS=64
+FFLAGS = -u -O -DSUN $MFLAG -D_FILE_OFFSET_BITS=64 -ffixed-line-length-none
 
 ## gnu g77 (which assumes no SAVE)
 #F77 = g77

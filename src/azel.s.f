@@ -2,16 +2,17 @@ c-----------------------------------------------------------------------
 c © A J S Hamilton 2001
 c-----------------------------------------------------------------------
       subroutine azel(ra,dec,raz,elp,azp,az,el)
-      real*10 ra,dec,raz,elp,azp,az,el
+      integer, parameter ::  star10 = selected_real_kind(r=4931,p=18)
+      real(kind=star10) ra,dec,raz,elp,azp,az,el
 c
 c        parameters
-      real*10 CIRCLE,PI,RADIAN
-      parameter (CIRCLE = 360._10,
-     *           PI = 3.1415926535897932384626_10,
-     *           RADIAN = 180._10/PI)
+      real(kind=star10) CIRCLE,PI,RADIAN
+      parameter (CIRCLE = 360._star10,
+     *           PI = 3.1415926535897932384626_star10,
+     *           RADIAN = 180._star10/PI)
 c        local (automatic) variables
       integer iz
-      real*10 cazm,cdec,cel,celp,cra,sazm,sdec,sel,selp,sra
+      real(kind=star10) cazm,cdec,cel,celp,cra,sazm,sdec,sel,selp,sra
 c *
 c * Convert RA & Dec ra, dec -> azimuth & elevation.
 c * To accomplish the inverse operation, az, el -> ra, dec,
@@ -36,18 +37,18 @@ c        sines and cosines of input angles
       cra=cos((ra-raz)/RADIAN)
 c        sine and cosine of elevation
       sel=cdec*celp*cra+sdec*selp
-      if (sel.gt.1._10) then
-        sel=1._10
-      elseif (sel.lt.-1._10) then
-        sel=-1._10
+      if (sel.gt.1._star10) then
+        sel=1._star10
+      elseif (sel.lt.-1._star10) then
+        sel=-1._star10
       endif
-      cel=sqrt(1._10-sel**2)
+      cel=sqrt(1._star10-sel**2)
 c        elevation in degrees
       el=asin(sel)*RADIAN
 c        if elevation is +90 or -90 degrees, set azimuth to that of NCP
-      if (cel.eq.0._10) then
+      if (cel.eq.0._star10) then
         az=azp
-      elseif (cel.ne.0._10) then
+      elseif (cel.ne.0._star10) then
 c        sine and cosine of azimuth relative to NCP azimuth
         sazm=-cdec*sra/cel
         cazm=(sdec*celp-cdec*selp*cra)/cel
@@ -55,7 +56,7 @@ c        azimuth in degrees
         az=atan2(sazm,cazm)*RADIAN+azp
 c        ensure azimuth is in interval [0,360)
         iz=az/CIRCLE
-        if (az.lt.0._10) iz=iz-1
+        if (az.lt.0._star10) iz=iz-1
         az=az-iz*CIRCLE
       endif
       return

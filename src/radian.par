@@ -1,5 +1,5 @@
 c-----------------------------------------------------------------------
       include 'pi.par'
-      real*10 RADIAN
-      parameter (RADIAN=180._10/PI)
+      real(kind=star10) RADIAN
+      parameter (RADIAN=180._star10/PI)
 c

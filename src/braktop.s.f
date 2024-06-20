@@ -2,8 +2,9 @@ c-----------------------------------------------------------------------
 c © A J S Hamilton 2001
 c-----------------------------------------------------------------------
       subroutine braktop(aa,ia,a,n,l)
+      integer, parameter ::  star10 = selected_real_kind(r=4931,p=18)
       integer ia,n,l
-      real*10 aa,a(n)
+      real(kind=star10) aa,a(n)
       integer idir,istep
 c *
 c * Bracket aa in table a ordered in decreasing order,
@@ -75,8 +76,9 @@ c        binary chop homes in on desired place in table
 c
 c-----------------------------------------------------------------------
       subroutine brakbot(aa,ia,a,n,l)
+      integer, parameter ::  star10 = selected_real_kind(r=4931,p=18)
       integer ia,n,l
-      real*10 aa,a(n)
+      real(kind=star10) aa,a(n)
       integer idir,istep
 c *
 c * Bracket aa in table a ordered in increasing order,
@@ -148,8 +150,9 @@ c        binary chop homes in on desired place in table
 c
 c-----------------------------------------------------------------------
       subroutine braktpa(aa,ia,a,n,l)
+      integer, parameter ::  star10 = selected_real_kind(r=4931,p=18)
       integer ia,n,l
-      real*10 aa,a(n)
+      real(kind=star10) aa,a(n)
 c        intrinsics
       intrinsic abs
 c        local (automatic) variables
@@ -224,8 +227,9 @@ c        binary chop homes in on desired place in table
 c
 c-----------------------------------------------------------------------
       subroutine brakbta(aa,ia,a,n,l)
+      integer, parameter ::  star10 = selected_real_kind(r=4931,p=18)
       integer ia,n,l
-      real*10 aa,a(n)
+      real(kind=star10) aa,a(n)
 c        intrinsics
       intrinsic abs
 c        local (automatic) variables

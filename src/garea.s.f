@@ -2,30 +2,31 @@ c-----------------------------------------------------------------------
 c © A J S Hamilton 2001
 c-----------------------------------------------------------------------
       subroutine garea(area,rp,cm,np,tol,verb,phi,iord,ldegen)
+      integer, parameter ::  star10 = selected_real_kind(r=4931,p=18)
       integer np,verb
       logical ldegen
-      real*10 area,rp(3,np),cm(np),tol
+      real(kind=star10) area,rp(3,np),cm(np),tol
 c        work arrays (could be automatic if compiler supports it)
       integer iord(2*np)
-      real*10 phi(2,np)
+      real(kind=star10) phi(2,np)
 c
 c        parameters
       include 'pi.par'
-      real*10 TWOPI
-      parameter (TWOPI=2._10*PI)
+      real(kind=star10) TWOPI
+      parameter (TWOPI=2._star10*PI)
 c        intrinsics
       intrinsic abs
 c        externals
       integer garpi,gsegij,gzeroar
 c        data variables
-      real*10 big
-      real*10 dphmin
+      real(kind=star10) big
+      real(kind=star10) dphmin
 c        local variables
       integer i,iarea,ik,iseg,j,jm,jml,jmu,jp,jpl,jpu,k,km,kp,l,
      *  nbd,nbd0m,nbd0p,ni,nmult,retry,scmi
 C     logical warn
       logical whole
-      real*10 bik,cmi,cmik,cmk,d,darea,dph,
+      real(kind=star10) bik,cmi,cmik,cmk,d,darea,dph,
      *  ph,phm,php,psi,si,tolin,xi(3),yi(3)
       real*8 ikchk,ikran
 c *
@@ -54,9 +55,9 @@ c Input/Output: tol
 c Work arrays: phi and iord should be dimensioned at least 2*np
 c
 c        set azimuthal angle of non-intersection to big
-      data big /1.e6_10/
+      data big /1.e6_star10/
 c        possible multiple intersection when dph < dphmin
-      data dphmin /1.e-8_10/
+      data dphmin /1.e-8_star10/
 c
 c        input tolerance to multiple intersections
       tolin=tol
@@ -79,7 +80,7 @@ C     warn=.false.
 c        initialize count of near multiple intersections to zero
       nmult=0
 c        zero area
-      area=0._10
+      area=0._star10
 c        check for zero area because one circle is null
       if (gzeroar(cm,np).eq.0) goto 410
 c        no constraints at all will mean area is whole sphere
@@ -90,22 +91,22 @@ c        number of non-intersecting circles bounding area
       nbd0m=0
       nbd0p=0
 c        error check on evaluation of vertex terms
-      ikchk=0._10
+      ikchk=0._star10
 c--------identify boundary segments around each circle i in turn
       do 280 i=1,np
 c        cm(i).ge.2 means include whole sphere, which is no constraint
-        if (cm(i).ge.2._10) goto 280
+        if (cm(i).ge.2._star10) goto 280
 c        there is a constraint, so area is not whole sphere
         whole=.false.
 c        scmi * cmi = 1-cos th(i)
-        if (cm(i).ge.0._10) then
+        if (cm(i).ge.0._star10) then
           scmi=1
         else
           scmi=-1
         endif
         cmi=abs(cm(i))
 c        si = sin th(i)
-        si=sqrt(cmi*(2._10-cmi))
+        si=sqrt(cmi*(2._star10-cmi))
 c........construct cartesian axes with z-axis along rp(i)
         call gaxisi(rp(1,i),xi,yi)
 c........angles phi about z-axis rp(i) of intersection of i & j circles
@@ -115,7 +116,7 @@ c        i circle lies outside polygon
 c        area of polygon is zero
         if (ni.eq.-2) then
 c        area can be non-zero from psi at multiple intersections
-          area=0._10
+          area=0._star10
           goto 410
         endif
 c........i circle has no intersections
@@ -198,22 +199,22 @@ c        ikchk = ikchk + ikran, added as unsigned long long's
               cmk=abs(cm(k))
 c        cmik = 1-cos th(ik)
               cmik=((rp(1,i)-rp(1,k))**2+(rp(2,i)-rp(2,k))**2
-     *          +(rp(3,i)-rp(3,k))**2)/2._10
+     *          +(rp(3,i)-rp(3,k))**2)/2._star10
 c        bik = cik-ci*ck
 c        d = 1-ci^2-ck^2-cik^2+2*ci*ck*cik
 c        cos psi = bik/(si*sk)
 c        sin psi = sqrt(d)/(si*sk)
 c        psi = atan(sqrt(d)/bik) is exterior angle at intersection
               bik=(cmi+cmk)-cmi*cmk-cmik
-              if ((scmi.ge.0.and.cm(k).lt.0._10)
-     *          .or.(scmi.lt.0.and.cm(k).ge.0._10)) bik=-bik
+              if ((scmi.ge.0.and.cm(k).lt.0._star10)
+     *          .or.(scmi.lt.0.and.cm(k).ge.0._star10)) bik=-bik
 c        i and k circles kiss
               if (phi(1,k).eq.phi(2,k)) then
-                d=0._10
+                d=0._star10
               else
-                d=-(cmi-cmk)**2+cmik*(2._10*((cmi+cmk)-cmi*cmk)-cmik)
+                d=-(cmi-cmk)**2+cmik*(2.0_star10*((cmi+cmk)-cmi*cmk)-cmik)
 c        assert that circles at least touch
-                if (d.lt.0._10) d=0._10
+                if (d.lt.0._star10) d=0._star10
                 d=sqrt(d)
               endif
               psi=atan2(d,bik)
@@ -225,7 +226,7 @@ c        do another segment
         endif
   280 continue
 c--------check on whether ik endpoints matched ki endpoints
-      if (ikchk.ne.0._10) then
+      if (ikchk.ne.0._star10) then
 C       warn=.true.
 C       print *,'*** from garea: at tol =',tol,
 C    *    ', ikchk=',ikchk,' should be 0'
@@ -237,7 +238,7 @@ c    *    cm(j),j=1,np)
 c        retry with modified tolerance
         call gtol(tol,tolin)
         goto 100
-      elseif (tol.gt.0._10) then
+      elseif (tol.gt.0._star10) then
 C       print *,'... from garea: success at tol =',tol
       endif
 c--------add/subtract 2*pi's to area

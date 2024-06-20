@@ -2,23 +2,24 @@ c-----------------------------------------------------------------------
 c © A J S Hamilton 2001
 c-----------------------------------------------------------------------
       subroutine gvphi(angle,v,rp,cm,np,rpi,cmi,vi,tol,phi,iord)
+      integer, parameter ::  star10 = selected_real_kind(r=4931,p=18)
       integer np
-      real*10 angle,v(3),rp(3,np),cm(np),rpi(3),cmi,vi(3),tol
+      real(kind=star10) angle,v(3),rp(3,np),cm(np),rpi(3),cmi,vi(3),tol
 c        work arrays (could be automatic if compiler supports it)
       integer iord(2*np)
-      real*10 phi(2,np)
+      real(kind=star10) phi(2,np)
 c
 c        parameters
       include 'pi.par'
-      real*10 TWOPI
-      parameter (TWOPI=2._10*PI)
+      real(kind=star10) TWOPI
+      parameter (TWOPI=2._star10*PI)
 c        externals
       integer gsegij,gzeroar
 c        data variables
-      real*10 big
+      real(kind=star10) big
 c        local (automatic) variables
       integer i,iphin,iseg,j,jm,jml,jmu,jp,jpl,jpu,km,kp,ni,scmi
-      real*10 dph,dphin,dphinmn,ph,phin,phm,php,
+      real(kind=star10) dph,dphin,dphinmn,ph,phin,phm,php,
      *  si,xi(3),xv,yi(3),yv,zv
 c *
 c * This routine is mostly lifted from gphi and gvert.
@@ -44,24 +45,24 @@ c               = 0. if boundary lies entirely outside circle.
 c         v(3) = unit vector at centre of segment of circle.
 c Work arrays: phi and iord should be dimensioned at least 2*np
 c
-      data big /1.e6_10/
+      data big /1.e6_star10/
 c
 c        initialise length of segment to zero
-      angle=0._10
+      angle=0._star10
 c        initialise point at centre of segment to zero
-      v(1)=0._10
-      v(2)=0._10
-      v(3)=0._10
+      v(1)=0._star10
+      v(2)=0._star10
+      v(3)=0._star10
 c        check for null circle
-      if (cmi.lt.0._10) goto 410
-      if (cmi.gt.2._10) goto 410
+      if (cmi.lt.0._star10) goto 410
+      if (cmi.gt.2._star10) goto 410
 c        check for zero angle because one circle is null
       if (gzeroar(cm,np).eq.0) goto 410
 c        initialise dphinmn to impossibly large value
       dphinmn=big
 c........si = sin thi
       scmi=1
-      si=sqrt(cmi*(2._10-cmi))
+      si=sqrt(cmi*(2._star10-cmi))
 c........construct cartesian axes with z-axis along rpi
       call gaxisi(rpi,xi,yi)
 c........azimuthal angle closest to vector vi
@@ -80,7 +81,7 @@ c        circle has no intersections
         ph=phin
         xv=si*cos(ph)
         yv=si*sin(ph)
-        zv=1._10-cmi
+        zv=1._star10-cmi
         v(1)=zv*rpi(1)+xv*xi(1)+yv*yi(1)
         v(2)=zv*rpi(2)+xv*xi(2)+yv*yi(2)
         v(3)=zv*rpi(3)+xv*xi(3)+yv*yi(3)
@@ -109,7 +110,7 @@ c        phase phin to central point ph
           iphin=nint((phin-ph)/TWOPI)
           phin=phin-iphin*TWOPI
           if (phm.le.phin.and.phin.le.php) then
-            dphin=0._10
+            dphin=0._star10
           elseif (phm.gt.phin) then
             dphin=phm-phin
           elseif (phin.gt.php) then
@@ -122,12 +123,12 @@ c        segment contains or is closest to phin
 c        coords of centre of edge in frame where axes are xi, yi, rp
             xv=si*cos(ph)
             yv=si*sin(ph)
-            zv=1._10-cmi
+            zv=1._star10-cmi
             v(1)=zv*rpi(1)+xv*xi(1)+yv*yi(1)
             v(2)=zv*rpi(2)+xv*xi(2)+yv*yi(2)
             v(3)=zv*rpi(3)+xv*xi(3)+yv*yi(3)
 c        segment contains phin, so cannot be beaten
-            if (dphin.eq.0._10) goto 280
+            if (dphin.eq.0._star10) goto 280
           endif
 c        do another segment
         goto 220
